@@ -88,7 +88,7 @@ create table itensPedidos (
 insert into itensPedidos (idPedido, idProduto, quantidade) values (1,1,2);
 insert into itensPedidos (idPedido, idProduto, quantidade) values (1,2,3);
 
-select itensPedidos.idItensPedidos, Pedidos.idPedido, Produtos.idProduto, Clientes.nomeCliente, Produtos.nomeProduto, Produtos.precoProduto
+select Pedidos.idPedido, Produtos.idProduto, Clientes.nomeCliente, Produtos.nomeProduto, quantidade, Produtos.precoProduto
 from (itensPedidos inner join Pedidos on itensPedidos.idPedido = Pedidos.idPedido)
 inner join Produtos on itensPedidos.idProduto = Produtos.idProduto
 inner join Clientes on Pedidos.idCliente = Clientes.idCliente;
