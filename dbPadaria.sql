@@ -40,6 +40,26 @@ insert into Produtos (nomeProduto, descricaoProduto, precoProduto, estoqueProdut
 insert into Produtos (nomeProduto, descricaoProduto, precoProduto, estoqueProduto, categoriaProduto, idFornecedor) values
 ("Pão Francês", "O pãozinho é algo que não sai da dieta das pessoas. Seja no café da manhã, como acompanhamento antes de um almoço ou como lanche da tarde.", "0.50", 50, "Pães", 1);
 
+alter table Produtos ADD column validadeProduto datetime;
+alter table Produtos ADD column pesoProduto decimal(10,2);
+alter table Produtos ADD column ingredientesProduto text;
+
+insert into Produtos (nomeProduto, descricaoProduto, precoProduto, estoqueProduto, categoriaProduto, idFornecedor, pesoProduto, ingredientesProduto, validadeProduto) values
+("Bolo de Chocolate", "Fofinho, prático, rápido e delicioso: essa é realmente a melhor receita de bolo de chocolate do mundo!", "45.00", 10, "Bolos", 1, "2.00", "2 xícaras de farinha de trigo, 1 xícara de leite, 1 colher (sopa) de fermento em pó, cobertura, 2 xícaras de leite, 2 xícaras de açucar, 6 colheres (sopa) de chocolate em pó, 6 ovos, 2 colheres (sopa) de manteiga", "2023-11-20");
+
+insert into Produtos (nomeProduto, descricaoProduto, precoProduto, estoqueProduto, categoriaProduto, idFornecedor, pesoProduto, ingredientesProduto, validadeProduto) values
+("Pão Francês", "O pãozinho é algo que não sai da dieta das pessoas. Seja no café da manhã, como acompanhamento antes de um almoço ou como lanche da tarde.", "0.00", 50, "Pães", 1, "0.45", "1/2 kg de farinha de trigo, 15g de sal, 1 colher (sopa) de margarina, 10g de fermento para pão, 20g de açucar", "2023-11-16");
+
+
+update Produtos set pesoProduto = "2.00" where idProduto = 1;
+update Produtos set ingredientesProduto = "2 xícaras de farinha de trigo, 1 xícara de leite, 1 colher (sopa) de fermento em pó, cobertura, 2 xícaras de leite, 2 xícaras de açucar, 6 colheres (sopa) de chocolate em pó, 6 ovos, 2 colheres (sopa) de manteiga" where idProduto = 1;
+update Produtos set validadeProduto = "2023-11-20" where idProduto = 1;
+
+update Produtos set pesoProduto = "0.45" where idProduto = 2;
+update Produtos set ingredientesProduto = "1/2 kg de farinha de trigo, 15g de sal, 1 colher (sopa) de margarina, 10g de fermento para pão, 20g de açucar" where idProduto = 2;
+update Produtos set validadeProduto = "2023-11-15" where idProduto = 2;
+
+
 select * from Produtos;
 select * from Produtos where categoriaProduto = "Pães";
 select * from Produtos where precoProduto < 50.00 order by precoProduto asc;
@@ -92,6 +112,9 @@ select Pedidos.idPedido, Produtos.idProduto, Clientes.nomeCliente, Produtos.nome
 from (itensPedidos inner join Pedidos on itensPedidos.idPedido = Pedidos.idPedido)
 inner join Produtos on itensPedidos.idProduto = Produtos.idProduto
 inner join Clientes on Pedidos.idCliente = Clientes.idCliente;
+
+select sum(quantidade * 45.50)  as Total from Produtos inner join itensPedidos on Produtos.idProduto = itensPedidos.idProduto where idPedido = 1;
+
 
 
 
