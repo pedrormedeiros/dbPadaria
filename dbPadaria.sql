@@ -40,7 +40,7 @@ insert into Produtos (nomeProduto, descricaoProduto, precoProduto, estoqueProdut
 insert into Produtos (nomeProduto, descricaoProduto, precoProduto, estoqueProduto, categoriaProduto, idFornecedor) values
 ("Pão Francês", "O pãozinho é algo que não sai da dieta das pessoas. Seja no café da manhã, como acompanhamento antes de um almoço ou como lanche da tarde.", "0.50", 50, "Pães", 1);
 
-alter table Produtos ADD column validadeProduto datetime;
+alter table Produtos ADD column validadeProduto date;
 alter table Produtos ADD column pesoProduto decimal(10,2);
 alter table Produtos ADD column ingredientesProduto text;
 
@@ -50,13 +50,14 @@ insert into Produtos (nomeProduto, descricaoProduto, precoProduto, estoqueProdut
 insert into Produtos (nomeProduto, descricaoProduto, precoProduto, estoqueProduto, categoriaProduto, idFornecedor, pesoProduto, ingredientesProduto, validadeProduto) values
 ("Pão Francês", "O pãozinho é algo que não sai da dieta das pessoas. Seja no café da manhã, como acompanhamento antes de um almoço ou como lanche da tarde.", "0.00", 50, "Pães", 1, "0.45", "1/2 kg de farinha de trigo, 15g de sal, 1 colher (sopa) de margarina, 10g de fermento para pão, 20g de açucar", "2023-11-16");
 
+describe Produtos;
 
 update Produtos set pesoProduto = "2.00" where idProduto = 1;
 update Produtos set ingredientesProduto = "2 xícaras de farinha de trigo, 1 xícara de leite, 1 colher (sopa) de fermento em pó, cobertura, 2 xícaras de leite, 2 xícaras de açucar, 6 colheres (sopa) de chocolate em pó, 6 ovos, 2 colheres (sopa) de manteiga" where idProduto = 1;
 update Produtos set validadeProduto = "2023-11-20" where idProduto = 1;
 
 update Produtos set pesoProduto = "0.45" where idProduto = 2;
-update Produtos set ingredientesProduto = "1/2 kg de farinha de trigo, 15g de sal, 1 colher (sopa) de margarina, 10g de fermento para pão, 20g de açucar" where idProduto = 2;
+update Produtos set ingredientesProduto = "1/2 de farinha de aveia, 15g de sal, 1 colher (sopa) de margarina, 10g de fermento para pão, 20g de açucar" where idProduto = 2;
 update Produtos set validadeProduto = "2023-11-15" where idProduto = 2;
 
 
@@ -113,7 +114,15 @@ from (itensPedidos inner join Pedidos on itensPedidos.idPedido = Pedidos.idPedid
 inner join Produtos on itensPedidos.idProduto = Produtos.idProduto
 inner join Clientes on Pedidos.idCliente = Clientes.idCliente;
 
-select sum(quantidade * 45.50)  as Total from Produtos inner join itensPedidos on Produtos.idProduto = itensPedidos.idProduto where idPedido = 1;
+select sum(quantidade * precoProduto) as Total from Produtos inner join itensPedidos on Produtos.idProduto = itensPedidos.idProduto where idPedido = 1;
+
+select * from Produtos where validadeProduto > curdate();
+
+select * from Produtos where ingredientesProduto like '%chocolate%';
+
+select * from Produtos where ingredientesProduto not like 'farinha de trigo' and precoProduto <= 7.90;
+
+
 
 
 
